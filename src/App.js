@@ -1,7 +1,9 @@
+import React, { useState, useRef } from "react";
 import CVMaker from './components/Cv_marker';
 import './App.css';
 
 function App() {
+
   return (
     <div className="App">
       <CVMaker />
