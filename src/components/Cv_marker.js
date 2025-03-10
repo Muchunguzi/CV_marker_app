@@ -1,6 +1,7 @@
 import React, { useState, useRef } from "react";
 import { useReactToPrint } from "react-to-print";
 import cvStyles from "./CvStyles.css";
+import PlainWhiteTemplate from "./PlainWhiteTemplate";
 
 const jobTitles = [
   "Software Engineer",
@@ -23,7 +24,8 @@ const CVGenerator = () => {
     email: "",
     phone: "",
     address: "",
-    experience: "",
+    nationality: "",
+    professionalExperience: "",
     photo: "",
     jobPosition: "",
   });
@@ -123,25 +125,37 @@ const CVGenerator = () => {
           <input type="text" name="address" value={formData.address} onChange={handleChange} required className="w-full mt-1 p-2 border rounded" />
        </p>
        <p>
-       <label className="block">Experience:</label><br/>
-          <textarea name="experience" value={formData.experience} onChange={handleChange} required className="w-full mt-1 p-2 border rounded h-24"></textarea>
+       <label className="block">Nationality:</label><br/>
+          <input type="text" name="nationality" value={formData.nationality} onChange={handleChange} required className="w-full mt-1 p-2 border rounded" />
+       </p>
+       <p>
+       <label className="block">Objective:</label><br/>
+          <textarea name="objective" value={formData.objective} onChange={handleChange} required className="w-full mt-1 p-2 border rounded h-24" ></textarea>
+       </p>
+       <p>
+       <label className="block">Education:</label><br/>
+          <input type="text" name="education" value={formData.education} onChange={handleChange} required className="w-full mt-1 p-2 border rounded" />
+       </p>
+       <p>
+       <label className="block">Professional Experience:</label><br/>
+          <textarea name="professionalExperience" value={formData.professionalExperience} onChange={handleChange} required className="w-full mt-1 p-2 border rounded h-24"></textarea>
+       </p>
+       <p>
+       <label className="block">Skills:</label><br/>
+          <input type="text" name="skills" value={formData.skills} onChange={handleChange} required className="w-full mt-1 p-2 border rounded" />
+       </p>
+       <p>
+       <label className="block">Languages:</label><br/>
+          <input type="text" name="languages" value={formData.languages} onChange={handleChange} required className="w-full mt-1 p-2 border rounded" />
        </p>
         <button type="button" onClick={handlePrint} className="bg-blue-500 text-white px-4 py-2 rounded shadow hover:bg-blue-600">Print CV</button>
       </form>
 
       {/* CV Preview Section */}
-      <div ref={cvRef} className="cv_plain_white" style={{ width: '210mm', height: '297mm' }}>
-        <div className="text-center mb-6">
-          {formData.photo && <img src={formData.photo} alt="Profile" className="" style={{height:"150px", width:"150px"}} />}
-          <h2 className="text-2xl font-bold mt-4">{formData.name}</h2>
-        </div>
-        <p><strong>Email:</strong> {formData.email}</p>
-        <p><strong>Phone:</strong> {formData.phone}</p>
-        <p><strong>Job Position:</strong>{formData.jobPosition}</p>
-        <p><strong>Address:</strong> {formData.address}</p>
-        <p className="mt-4"><strong>Experience:</strong></p>
-        <p>{formData.experience}</p>
+      <div className="CVs_preview">
+          <PlainWhiteTemplate ref = {cvRef} formData = {formData}/>
       </div>
+      
     </div>
   );
 };
