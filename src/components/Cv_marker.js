@@ -1,5 +1,23 @@
 import React, { useState, useRef } from "react";
 import { useReactToPrint } from "react-to-print";
+import cvStyles from "./CvStyles.css";
+import PlainWhiteTemplate from "./PlainWhiteTemplate";
+import Template2 from "./Template2";
+
+const jobTitles = [
+  "Software Engineer",
+  "Factory Worker",
+  "Customer Service Representative",
+  "Security Guard",
+  "Office Administrator",
+  "Graphic Designer",
+  "Marketing Specialist",
+  "Accountant",
+  "Sales Executive",
+  "Data Analyst"
+];
+
+
 
 const CVGenerator = () => {
   const [formData, setFormData] = useState({
@@ -7,10 +25,16 @@ const CVGenerator = () => {
     email: "",
     phone: "",
     address: "",
-    experience: "",
+    nationality: "",
+    professionalExperience: "",
     photo: "",
     jobPosition: "",
+    education: [
+      {year: "", school: "" , degree: ""}
+    ],
   });
+
+  const [filteredJobs, setFilteredJobs] = useState([]);
 
   const cvRef = useRef(null);
 
@@ -35,57 +59,162 @@ const CVGenerator = () => {
     }
   };
 
+  const handleJobInput = (e) => {
+    const value = e.target.value;
+    setFormData({ ...formData, jobPosition: value });
+
+    if (value.length > 1) {
+      const suggestions = jobTitles.filter((job) =>
+        job.toLowerCase().includes(value.toLowerCase())
+      );
+      setFilteredJobs(suggestions);
+    } else {
+      setFilteredJobs([]);
+    }
+  };
+
+  const selectJob = (job) => {
+    setFormData({ ...formData, jobPosition: job });
+    setFilteredJobs([]);
+  };
+
+  const handleEducationChange = (index , field , value) => {
+    const updatedEducation = [...formData.education];
+    updatedEducation[index][field] = value;
+    setFormData({...formData, education: updatedEducation});
+  }
+
+  const addEducation = () => {
+    setFormData({
+      ...formData,
+      education: [...formData.education, { year: "", school: "", degree: ""}]
+
+      })
+  }
+
+  const removeEducation = (index) => {
+    const updatedEducation = formData.education.filter((_,idx) => idx !== index);
+    setFormData({...formData, education: updatedEducation})
+  }
+
+
+
   return (
-    <div className="flex flex-row items-start p-6 bg-gray-100 min-h-screen space-x-6">
+    <div className=" container" >
       {/* Form Section */}
-      <form className="bg-white p-6 rounded-lg shadow-md w-1/2 space-y-4">
+      <form className="">
         <h2 className="text-xl font-bold mb-4">CV Generator</h2>
-        
+        <p>
         <label className="block">Photo:
           <input type="file" accept="image/*" onChange={handlePhotoUpload} className="mt-2" />
         </label>
-        
-        <label className="block">Name:
+        </p>
+        <p>
+        <label className="block">Name: </label><br/>
           <input type="text" name="name" value={formData.name} onChange={handleChange} required className="w-full mt-1 p-2 border rounded" />
-        </label>
+        </p>
+        <p>
+        <label className="block">Job Position:</label><br/>
+          <input
+            type="text"
+            name="jobPosition"
+            value={formData.jobPosition}
+            onChange={handleJobInput}
+            placeholder="Type to get job suggestions"
+            required
+            className="w-full mt-1 p-2 border rounded"
+          />
+          {filteredJobs.length > 0 && (
+            <ul className="mt-2 bg-white border rounded shadow-md">
+              {filteredJobs.map((job, index) => (
+                <li key={index} className="p-2 cursor-pointer hover:bg-gray-200" onClick={() => selectJob(job)}>
+                  {job}
+                </li>
+              ))}
+            </ul>
+          )}
         
-        <label className="block">Email:
+        </p>
+        <p>
+        <label className="block">Email:</label><br/>
           <input type="email" name="email" value={formData.email} onChange={handleChange} required className="w-full mt-1 p-2 border rounded" />
-        </label>
-        
-        <label className="block">Phone:
+        </p>
+        <p>
+        <label className="block">Phone:</label><br/>
           <input type="tel" name="phone" value={formData.phone} onChange={handleChange} required className="w-full mt-1 p-2 border rounded" />
-        </label>
-        <label className="block">Job Position:
-          <input type="text" name="jobPosition" value={formData.jobPosition} onChange={handleChange} required className="w-full mt-1 p-2 border rounded" />
-        </label>
-        
-        <label className="block">Address:
+        </p>
+       <p>
+       <label className="block">Address:</label><br/>
           <input type="text" name="address" value={formData.address} onChange={handleChange} required className="w-full mt-1 p-2 border rounded" />
-        </label>
-        
-        <label className="block">Experience:
-          <textarea name="experience" value={formData.experience} onChange={handleChange} required className="w-full mt-1 p-2 border rounded h-24"></textarea>
-        </label>
-        
+       </p>
+       <p>
+       <label className="block">Nationality:</label><br/>
+          <input type="text" name="nationality" value={formData.nationality} onChange={handleChange} required className="w-full mt-1 p-2 border rounded" />
+       </p>
+       <p>
+       <label className="block">Objective:</label><br/>
+          <textarea name="objective" value={formData.objective} onChange={handleChange} required className="w-full mt-1 p-2 border rounded h-24" ></textarea>
+       </p>
+       <p>
+       <label className="block">Education:</label><br/>
+         
+       </p>
+       {formData.education.map((edu, index) => (
+        <div key={index} className="mb-4 border p-3 rounded">
+          <input
+             type="text"
+             placeholder="Year"
+             value={edu.year}
+             onChange={(e) => handleEducationChange(index, 'year', e.target.value)} 
+             className="block mb-2"
+           />
+           <input
+            type="text"
+            placeholder="School"
+            value={edu.school}
+            onChange={(e) => handleEducationChange(index, 'school', e.target.value)}
+            className="block mb-2"
+           /> 
+           <input
+           
+           type="text"
+           placeholder="Degree"
+           value={edu.degree}
+           onChange={(e) => handleEducationChange(index, 'degree', e.target.value)}
+           className="block mb-2"
+           />
+           <button type="button" onClick={() => removeEducation(index)} className="text-red-500 text-sm">
+            Remove
+           </button>
+        </div>
+       ))}
+       <button type="button" onClick={addEducation} className="bg-blue-500 text-white px-3 py-1 rounded mt-2" >
+       Add Education
+       </button>
+       <p>
+       <label className="block">Professional Experience:</label><br/>
+          <textarea name="professionalExperience" value={formData.professionalExperience} onChange={handleChange} required className="w-full mt-1 p-2 border rounded h-24"></textarea>
+       </p>
+       <p>
+       <label className="block">Skills:</label><br/>
+          <input type="text" name="skills" value={formData.skills} onChange={handleChange} required className="w-full mt-1 p-2 border rounded" />
+       </p>
+       <p>
+       <label className="block">Languages:</label><br/>
+          <input type="text" name="languages" value={formData.languages} onChange={handleChange} required className="w-full mt-1 p-2 border rounded" />
+       </p>
         <button type="button" onClick={handlePrint} className="bg-blue-500 text-white px-4 py-2 rounded shadow hover:bg-blue-600">Print CV</button>
       </form>
 
       {/* CV Preview Section */}
-      <div ref={cvRef} className="bg-white p-8 rounded-lg shadow-md w-1/2 border border-gray-300" style={{ width: '210mm', height: '297mm' }}>
-        <div className="text-center mb-6">
-          {formData.photo && <img src={formData.photo} alt="Profile" className="w-24 h-24 mx-auto rounded-full border" />}
-          <h2 className="text-2xl font-bold mt-4">{formData.name}</h2>
-        </div>
-        <p><strong>Email:</strong> {formData.email}</p>
-        <p><strong>Phone:</strong> {formData.phone}</p>
-        <p><strong>Job Position:</strong>{formData.jobPosition}</p>
-        <p><strong>Address:</strong> {formData.address}</p>
-        <p className="mt-4"><strong>Experience:</strong></p>
-        <p>{formData.experience}</p>
+      <div className="CVs_preview">
+          {/*<PlainWhiteTemplate ref = {cvRef} formData = {formData}/> This is the white template */}
+          <Template2 ref = {cvRef} formData = {formData} />
       </div>
+      
     </div>
   );
 };
 
 export default CVGenerator;
+
