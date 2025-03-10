@@ -2,6 +2,7 @@ import React, { useState, useRef } from "react";
 import { useReactToPrint } from "react-to-print";
 import cvStyles from "./CvStyles.css";
 import PlainWhiteTemplate from "./PlainWhiteTemplate";
+import Template2 from "./Template2";
 
 const jobTitles = [
   "Software Engineer",
@@ -28,6 +29,9 @@ const CVGenerator = () => {
     professionalExperience: "",
     photo: "",
     jobPosition: "",
+    education: [
+      {year: "", school: "" , degree: ""}
+    ],
   });
 
   const [filteredJobs, setFilteredJobs] = useState([]);
@@ -73,6 +77,25 @@ const CVGenerator = () => {
     setFormData({ ...formData, jobPosition: job });
     setFilteredJobs([]);
   };
+
+  const handleEducationChange = (index , field , value) => {
+    const updatedEducation = [...formData.education];
+    updatedEducation[index][field] = value;
+    setFormData({...formData, education: updatedEducation});
+  }
+
+  const addEducation = () => {
+    setFormData({
+      ...formData,
+      education: [...formData.education, { year: "", school: "", degree: ""}]
+
+      })
+  }
+
+  const removeEducation = (index) => {
+    const updatedEducation = formData.education.filter((_,idx) => idx !== index);
+    setFormData({...formData, education: updatedEducation})
+  }
 
 
 
@@ -134,8 +157,40 @@ const CVGenerator = () => {
        </p>
        <p>
        <label className="block">Education:</label><br/>
-          <input type="text" name="education" value={formData.education} onChange={handleChange} required className="w-full mt-1 p-2 border rounded" />
+         
        </p>
+       {formData.education.map((edu, index) => (
+        <div key={index} className="mb-4 border p-3 rounded">
+          <input
+             type="text"
+             placeholder="Year"
+             value={edu.year}
+             onChange={(e) => handleEducationChange(index, 'year', e.target.value)} 
+             className="block mb-2"
+           />
+           <input
+            type="text"
+            placeholder="School"
+            value={edu.school}
+            onChange={(e) => handleEducationChange(index, 'school', e.target.value)}
+            className="block mb-2"
+           /> 
+           <input
+           
+           type="text"
+           placeholder="Degree"
+           value={edu.degree}
+           onChange={(e) => handleEducationChange(index, 'degree', e.target.value)}
+           className="block mb-2"
+           />
+           <button type="button" onClick={() => removeEducation(index)} className="text-red-500 text-sm">
+            Remove
+           </button>
+        </div>
+       ))}
+       <button type="button" onClick={addEducation} className="bg-blue-500 text-white px-3 py-1 rounded mt-2" >
+       Add Education
+       </button>
        <p>
        <label className="block">Professional Experience:</label><br/>
           <textarea name="professionalExperience" value={formData.professionalExperience} onChange={handleChange} required className="w-full mt-1 p-2 border rounded h-24"></textarea>
@@ -153,7 +208,8 @@ const CVGenerator = () => {
 
       {/* CV Preview Section */}
       <div className="CVs_preview">
-          <PlainWhiteTemplate ref = {cvRef} formData = {formData}/>
+          {/*<PlainWhiteTemplate ref = {cvRef} formData = {formData}/> This is the white template */}
+          <Template2 ref = {cvRef} formData = {formData} />
       </div>
       
     </div>

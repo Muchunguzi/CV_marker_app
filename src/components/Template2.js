@@ -1,9 +1,9 @@
 import React from "react";
 import { FaUserCircle } from "react-icons/fa";
 
-const Template2CV = React.forwardRef(({ formData }, ref) => {
+const Template2CV = React.forwardRef(({ formData }, cvRef) => {
   return (
-    <div ref={ref} className="w-[800px] mx-auto text-sm font-sans bg-white shadow-lg border border-gray-200">
+    <div ref={cvRef} className="w-[800px] mx-auto text-sm font-sans bg-white shadow-lg border border-gray-200">
       <div className="grid grid-cols-3 min-h-screen">
         {/* Left Sidebar */}
         <div className="col-span-1 bg-[#1f3b57] text-white p-6 flex flex-col items-center">
