@@ -6,12 +6,23 @@ div.container {
    display: flex;
    flex-direction: row;
    justify-content: center;
+   background: linear-gradient(to right, rgba(0, 0, 255, 0.8), rgba(0, 191, 255, 0.8));
+   margin: 0 auto;
 }
 form{
     display: flex;
     flex-direction: column;
-    border: 1px solid black;
+    margin-right: 10%;
+    box-shadow: 10px 10px 20px 5px rgba(0, 0 , 0 , 0.5);
+    background-color: white !important;
 }
 div.cv_plain_white{
+    box-shadow: 10px 10px 20px 5px rgba(0, 0 , 0 , 0.5);
+    background-color: white !important;
+}
+.profilePhoto{
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
     border: 1px solid black;
 }
