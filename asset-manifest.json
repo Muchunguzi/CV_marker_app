@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/CV_marker_app/static/css/main.2c64fb9b.css",
-    "main.js": "/CV_marker_app/static/js/main.b212c176.js",
+    "main.js": "/CV_marker_app/static/js/main.493ff3ef.js",
     "static/js/488.0a86ca9a.chunk.js": "/CV_marker_app/static/js/488.0a86ca9a.chunk.js",
     "index.html": "/CV_marker_app/index.html",
     "main.2c64fb9b.css.map": "/CV_marker_app/static/css/main.2c64fb9b.css.map",
-    "main.b212c176.js.map": "/CV_marker_app/static/js/main.b212c176.js.map",
+    "main.493ff3ef.js.map": "/CV_marker_app/static/js/main.493ff3ef.js.map",
     "488.0a86ca9a.chunk.js.map": "/CV_marker_app/static/js/488.0a86ca9a.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.2c64fb9b.css",
-    "static/js/main.b212c176.js"
+    "static/js/main.493ff3ef.js"
   ]
 }
