@@ -35,8 +35,30 @@ const CVGenerator = () => {
   });
 
   const [filteredJobs, setFilteredJobs] = useState([]);
-
+  const [currentIndex , setCurrentIndex] = useState(0);
+  
   const cvRef = useRef(null);
+
+  const Templates = [PlainWhiteTemplate  ,Template2 ] /*These are the individual CV templates*/
+
+  const ActiveTemplate = Templates[currentIndex];
+
+  
+
+ 
+  const nextTemplate = () => {
+    setCurrentIndex(
+      (prevIndex)  => (prevIndex + 1) % Templates.length
+    )
+  };
+
+  const prevTemplate = () => {
+    setCurrentIndex(
+      (prevIndex)  => (prevIndex - 1 + Templates.length) % Templates.length
+    )
+  };
+
+  
 
   const handlePrint = useReactToPrint({
     contentRef:cvRef, // Directly passing the ref here 
@@ -205,13 +227,12 @@ const CVGenerator = () => {
        </p>
         <button type="button" onClick={handlePrint} className="bg-blue-500 text-white px-4 py-2 rounded shadow hover:bg-blue-600">Print CV</button>
       </form>
-
+      <button onClick={prevTemplate}>Previous-Template</button>
       {/* CV Preview Section */}
       <div className="CVs_preview">
-          {/*<PlainWhiteTemplate ref = {cvRef} formData = {formData}/> This is the white template */}
-          <Template2 ref = {cvRef} formData = {formData} />
+      <ActiveTemplate ref = {cvRef} formData = {formData} />
       </div>
-      
+      <button onClick={nextTemplate}>Next-Template</button>
     </div>
   );
 };

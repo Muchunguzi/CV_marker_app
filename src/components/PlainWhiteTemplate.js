@@ -24,8 +24,19 @@ const PlainWhiteTemplate = forwardRef(({formData}, cvRef) => {
 <p><strong>Objective</strong></p>
 <p>{formData.objective}</p>
 <hr />
-<p><strong>Education</strong></p>
-<p>{formData.education}</p>
+<p>
+<div className="mb-6 w-full">
+            <h3 className="font-bold text-sm mb-2">EDUCATION</h3>
+            {formData.education?.map((edu, idx) => (
+              <div key={idx} className="mb-2">
+                <p className="font-semibold text-xs">{edu.year}</p>
+                <p className="text-xs">{edu.school}</p>
+                <p className="text-xs italic">{edu.degree}</p>
+              </div>
+            ))}
+          </div>
+
+</p>
 <hr />
 <p className="mt-4"><strong>Professional Experience:</strong></p>
 <p>{formData.professionalExperience}</p>
