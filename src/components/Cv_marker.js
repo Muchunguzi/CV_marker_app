@@ -227,12 +227,12 @@ const CVGenerator = () => {
        </p>
         <button type="button" onClick={handlePrint} className="bg-blue-500 text-white px-4 py-2 rounded shadow hover:bg-blue-600">Print CV</button>
       </form>
-      <button onClick={prevTemplate}>Previous-Template</button>
+      <button className="bg-gray-200 hover:by-gray-300 h-14 text-gray-800 font-semibold py-2 px-4  rounded-lg shadow transition duration-200 " onClick={prevTemplate}>Previous-Template</button>
       {/* CV Preview Section */}
       <div className="CVs_preview">
       <ActiveTemplate ref = {cvRef} formData = {formData} />
       </div>
-      <button onClick={nextTemplate}>Next-Template</button>
+      <button className="bg-blue-600 hover:bg-blue-700 h-14 text-white font-semibold py-2 px-4 rounded-lg shadow transition duration-200" onClick={nextTemplate}>Next-Template</button>
     </div>
   );
 };
